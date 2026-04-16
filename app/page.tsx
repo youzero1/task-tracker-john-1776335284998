@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import TodoInput from '@/components/TodoInput';
 import TodoList from '@/components/TodoList';
 import TodoFilter from '@/components/TodoFilter';
+import KeyboardShortcuts from '@/components/KeyboardShortcuts';
 
 export type FilterType = 'all' | 'active' | 'completed';
 
@@ -17,6 +18,8 @@ export interface Todo {
 export default function Home() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [filter, setFilter] = useState<FilterType>('all');
+  const [shortcutsOpen, setShortcutsOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const addTodo = (text: string) => {
     if (!text.trim()) return;
@@ -50,9 +53,9 @@ export default function Home() {
     );
   };
 
-  const clearCompleted = () => {
+  const clearCompleted = useCallback(() => {
     setTodos((prev) => prev.filter((todo) => !todo.completed));
-  };
+  }, []);
 
   const filteredTodos = todos.filter((todo) => {
     if (filter === 'active') return !todo.completed;
@@ -63,8 +66,60 @@ export default function Home() {
   const activeCount = todos.filter((t) => !t.completed).length;
   const completedCount = todos.filter((t) => t.completed).length;
 
+  // Global keyboard shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement).tagName.toLowerCase();
+      const isTyping = tag === 'input' || tag === 'textarea';
+
+      // Always available
+      if (e.key === '?') {
+        e.preventDefault();
+        setShortcutsOpen((prev) => !prev);
+        return;
+      }
+
+      // Skip shortcuts when typing in an input (except Escape handled in modal)
+      if (isTyping) return;
+
+      switch (e.key) {
+        case 'n':
+        case 'N':
+          e.preventDefault();
+          inputRef.current?.focus();
+          break;
+        case '1':
+          e.preventDefault();
+          setFilter('all');
+          break;
+        case '2':
+          e.preventDefault();
+          setFilter('active');
+          break;
+        case '3':
+          e.preventDefault();
+          setFilter('completed');
+          break;
+        case 'c':
+        case 'C':
+          e.preventDefault();
+          clearCompleted();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [clearCompleted]);
+
   return (
     <main className="min-h-screen bg-gradient-to-br from-red-900 via-red-700 to-rose-900 flex flex-col items-center py-16 px-4">
+      {/* Keyboard Shortcuts Modal */}
+      <KeyboardShortcuts
+        isOpen={shortcutsOpen}
+        onClose={() => setShortcutsOpen(false)}
+      />
+
       {/* Header */}
       <div className="w-full max-w-lg mb-10">
         <h1 className="text-5xl font-bold tracking-widest text-white text-center uppercase mb-2">
@@ -77,7 +132,7 @@ export default function Home() {
 
       {/* Input */}
       <div className="w-full max-w-lg mb-5">
-        <TodoInput onAdd={addTodo} />
+        <TodoInput onAdd={addTodo} inputRef={inputRef} />
       </div>
 
       {/* Todo Card */}
@@ -148,6 +203,16 @@ export default function Home() {
           </div>
         </div>
       )}
+
+      {/* Shortcuts hint button */}
+      <button
+        onClick={() => setShortcutsOpen(true)}
+        className="mt-8 flex items-center gap-2 text-white/30 hover:text-white/70 transition-colors text-xs group"
+        aria-label="View keyboard shortcuts"
+      >
+        <kbd className="inline-flex items-center px-1.5 py-0.5 bg-white/10 border border-white/20 rounded text-white/40 group-hover:text-white/70 font-mono text-xs transition-colors">?</kbd>
+        <span>keyboard shortcuts</span>
+      </button>
     </main>
   );
 }

@@ -4,9 +4,10 @@ import { useState } from 'react';
 
 interface TodoInputProps {
   onAdd: (text: string) => void;
+  inputRef?: React.RefObject<HTMLInputElement>;
 }
 
-export default function TodoInput({ onAdd }: TodoInputProps) {
+export default function TodoInput({ onAdd, inputRef }: TodoInputProps) {
   const [value, setValue] = useState('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,10 +21,11 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-3">
       <input
+        ref={inputRef}
         type="text"
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
-        placeholder="Add a new task..."
+        placeholder="Add a new task... (press N to focus)"
         className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-5 py-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all text-sm"
       />
       <button
