@@ -36,8 +36,8 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
         onClick={() => onToggle(todo.id)}
         className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
           todo.completed
-            ? 'bg-gradient-to-br from-purple-400 to-pink-400 border-transparent'
-            : 'border-white/30 hover:border-purple-400'
+            ? 'bg-gradient-to-br from-red-400 to-rose-500 border-transparent'
+            : 'border-white/30 hover:border-red-400'
         }`}
         aria-label={todo.completed ? 'Mark as incomplete' : 'Mark as complete'}
       >
@@ -58,11 +58,11 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEditValue(e.target.value)}
               onKeyDown={handleEditKeyDown}
               autoFocus
-              className="flex-1 bg-white/10 border border-purple-400 rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+              className="flex-1 bg-white/10 border border-red-400 rounded-lg px-3 py-1.5 text-white text-sm focus:outline-none focus:ring-2 focus:ring-red-400"
             />
             <button
               type="submit"
-              className="text-xs bg-purple-500 hover:bg-purple-600 text-white px-3 py-1.5 rounded-lg transition-colors"
+              className="text-xs bg-red-500 hover:bg-red-600 text-white px-3 py-1.5 rounded-lg transition-colors"
             >
               Save
             </button>
@@ -96,7 +96,7 @@ export default function TodoItem({ todo, onToggle, onDelete, onEdit }: TodoItemP
               setEditValue(todo.text);
               setIsEditing(true);
             }}
-            className="text-white/40 hover:text-purple-400 transition-colors p-1 rounded"
+            className="text-white/40 hover:text-red-300 transition-colors p-1 rounded"
             aria-label="Edit task"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

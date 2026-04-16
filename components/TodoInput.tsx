@@ -24,12 +24,12 @@ export default function TodoInput({ onAdd }: TodoInputProps) {
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
         placeholder="Add a new task..."
-        className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-5 py-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all text-sm"
+        className="flex-1 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl px-5 py-4 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-red-400 focus:border-transparent transition-all text-sm"
       />
       <button
         type="submit"
         disabled={!value.trim()}
-        className="bg-purple-500 hover:bg-purple-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-4 rounded-xl transition-all duration-200 text-sm whitespace-nowrap shadow-lg hover:shadow-purple-500/25"
+        className="bg-red-500 hover:bg-red-600 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-6 py-4 rounded-xl transition-all duration-200 text-sm whitespace-nowrap shadow-lg hover:shadow-red-500/25"
       >
         Add Task
       </button>

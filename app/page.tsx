@@ -64,13 +64,13 @@ export default function Home() {
   const completedCount = todos.filter((t) => t.completed).length;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col items-center py-16 px-4">
+    <main className="min-h-screen bg-gradient-to-br from-red-900 via-red-700 to-rose-900 flex flex-col items-center py-16 px-4">
       {/* Header */}
       <div className="w-full max-w-lg mb-10">
         <h1 className="text-5xl font-bold tracking-widest text-white text-center uppercase mb-2">
           Todo
         </h1>
-        <p className="text-center text-purple-300 text-sm tracking-wide">
+        <p className="text-center text-red-200 text-sm tracking-wide">
           Stay organized, stay productive
         </p>
       </div>
@@ -139,11 +139,11 @@ export default function Home() {
             <p className="text-xs text-white/50 mt-1">Total</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10">
-            <p className="text-2xl font-bold text-purple-400">{activeCount}</p>
+            <p className="text-2xl font-bold text-red-300">{activeCount}</p>
             <p className="text-xs text-white/50 mt-1">Active</p>
           </div>
           <div className="bg-white/5 rounded-xl p-4 text-center border border-white/10">
-            <p className="text-2xl font-bold text-green-400">{completedCount}</p>
+            <p className="text-2xl font-bold text-rose-300">{completedCount}</p>
             <p className="text-xs text-white/50 mt-1">Done</p>
           </div>
         </div>
